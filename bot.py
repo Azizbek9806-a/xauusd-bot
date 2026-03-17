@@ -24,7 +24,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Отправь мне скриншот графика, я перешлю его Азизбеку."
+        "Отправь мне скриншот графика, я перешлю его аналитику."
     )
 
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -36,16 +36,19 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     photo_file = await update.message.photo[-1].get_file()
     
-    try:
-        await context.bot.send_photo(
-            chat_id=YOUR_USER_ID,
-            photo=photo_file.file_id,
-            caption=f"📸 Скриншот от @{update.effective_user.username}"
-        )
-        await update.message.reply_text("✅ Скриншот отправлен!")
-    except Exception as e:
-        logger.error(f"Ошибка при пересылке: {e}")
-        await update.message.reply_text("❌ Не удалось отправить скриншот")
+    # Пересылаем фото тебе же (для теста)
+    await context.bot.send_photo(
+        chat_id=YOUR_USER_ID,
+        photo=photo_file.file_id,
+        caption=f"📸 Скриншот от @{update.effective_user.username}"
+    )
+    await update.message.reply_text("✅ Скриншот отправлен аналитику!")
+
+# Новая функция для ответа аналитика (меня)
+async def analyst_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Эта функция будет обрабатывать сообщения, которые я пишу сюда"""
+    # Пока просто заглушка
+    pass
 
 def main():
     logger.info("Запуск бота...")
